@@ -1,0 +1,37 @@
+name: Release Prod Docker image to Linode
+
+on:
+  release:
+    types: [published]
+jobs:
+  deploy_to_linode:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Copy docker-compose.yml to Linode
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          port: ${{ secrets.REMOTE_PORT }}
+          source: './docker-compose.yml'
+          target: '/root/docker-compose-redis/'
+
+      - name: Execute remote Docker Compose command
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          port: ${{ secrets.REMOTE_PORT }}
+          script: |
+            cd /root/docker-compose-redis/
+            docker-compose -f docker-compose.yml pull
+            docker-compose -f docker-compose.yml down
+            docker container prune -f
+            docker image prune -f
+            docker volume prune -f
+            docker-compose -f docker-compose.yml up -d

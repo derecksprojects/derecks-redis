@@ -1,0 +1,27 @@
+{
+  "name": "dereck-redis",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:dereckmezquita/dereck-redis.git",
+  "author": "dereckmezquita <dereck@mezquita.io>",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write .",
+    "envs": "export DOCKER_EXPOSE_PORT=6379;",
+    "docker-run:dev": "yarn run envs docker-compose -f docker-compose.yml up -d",
+    "docker-stop:dev": "yarn run envs docker-compose -f docker-compose.yml down",
+    "docker-data-delete:dev": "docker volume rm dereck-redis-data"
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "none",
+    "singleQuote": true,
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false
+  },
+  "devDependencies": {
+    "husky": "^9.0.11",
+    "prettier": "^3.2.5"
+  }
+}
