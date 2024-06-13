@@ -29,9 +29,9 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script: |
             cd /root/docker-compose-redis/
-            docker-compose -f docker-compose.yml pull
-            docker-compose -f docker-compose.yml down
+            docker compose -f docker-compose.yml pull
+            docker compose -f docker-compose.yml down
             docker container prune -f
             docker image prune -f
             docker volume prune -f
-            docker-compose -f docker-compose.yml up -d
+            docker compose -f docker-compose.yml up -d
