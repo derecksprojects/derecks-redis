@@ -1,7 +1,6 @@
 {
   "name": "derecks-redis",
   "version": "0.0.3",
-  "main": "index.js",
   "repository": "git@github.com:derecksprojects/derecks-redis.git",
   "author": "dereckmezquita <dereck@mezquita.io>",
   "private": true,
